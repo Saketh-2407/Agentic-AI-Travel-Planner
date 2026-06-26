@@ -1,0 +1,92 @@
+[
+  {
+    "id": "full_trip_paris",
+    "category": "full_trip",
+    "query": "Plan a 4 day trip from JFK to Paris starting next month, budget $3000 for 2 travelers. We like museums and good food.",
+    "expects_clarify": false
+  },
+  {
+    "id": "full_trip_tokyo_vegetarian",
+    "category": "full_trip",
+    "query": "5 days in Tokyo from JFK starting 2026-09-05, budget $4000, 2 travelers, vegetarian, relaxed pace.",
+    "expects_clarify": false
+  },
+  {
+    "id": "full_trip_rome_family",
+    "category": "full_trip",
+    "query": "10 day trip to Rome from ORD starting 2026-10-05 for a family of 5, budget $8000, kids love history and gelato.",
+    "expects_clarify": false
+  },
+  {
+    "id": "full_trip_barcelona",
+    "category": "full_trip",
+    "query": "A relaxed 5 day trip to Barcelona from JFK starting 2026-09-10, beaches and tapas, 2 travelers, budget $3000.",
+    "expects_clarify": false
+  },
+  {
+    "id": "full_trip_london_week",
+    "category": "full_trip",
+    "query": "7 days in London from JFK starting 2026-10-01, budget $5000 for 2 travelers, we love theatre and history.",
+    "expects_clarify": false
+  },
+  {
+    "id": "flights_only_tokyo",
+    "category": "flights_only",
+    "query": "Flights only: LAX to Tokyo, late September 2026, 1 traveler.",
+    "expects_clarify": false
+  },
+  {
+    "id": "flights_only_dated",
+    "category": "flights_only",
+    "query": "Flights only: ORD to Miami, 2026-12-12 to 2026-12-19, 2 travelers.",
+    "expects_clarify": false
+  },
+  {
+    "id": "stays_only_rome",
+    "category": "stays_only",
+    "query": "Just need a hotel in Rome for 4 nights starting 2026-09-10, 2 travelers.",
+    "expects_clarify": false
+  },
+  {
+    "id": "activities_only_lisbon",
+    "category": "activities_only",
+    "query": "Fun things to do in Lisbon from 2026-09-18 to 2026-09-20.",
+    "expects_clarify": false
+  },
+  {
+    "id": "vague_no_destination",
+    "category": "vague",
+    "query": "I want to go somewhere fun this summer, not sure where yet.",
+    "expects_clarify": true
+  },
+  {
+    "id": "vague_no_dates",
+    "category": "vague",
+    "query": "I want to visit Tokyo sometime, no idea when.",
+    "expects_clarify": true
+  },
+  {
+    "id": "bad_dates_flexible",
+    "category": "bad_dates",
+    "query": "Plan a trip to Rome, dates are flexible.",
+    "expects_clarify": true
+  },
+  {
+    "id": "bad_dates_missing",
+    "category": "bad_dates",
+    "query": "Thinking about Berlin, don't have exact dates yet.",
+    "expects_clarify": true
+  },
+  {
+    "id": "over_budget_paris",
+    "category": "over_budget",
+    "query": "Plan a 5 day trip from JFK to Paris starting 2026-09-15 for 2 travelers, budget $200 total, we want fine dining and 5-star hotels.",
+    "expects_clarify": false
+  },
+  {
+    "id": "obscure_route_empty",
+    "category": "obscure_route",
+    "query": "Flights only: PVD to RAI, 2026-08-10, 1 traveler.",
+    "expects_clarify": false
+  }
+]

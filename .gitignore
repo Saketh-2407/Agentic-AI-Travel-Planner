@@ -1,0 +1,28 @@
+# backend
+backend/.venv/
+__pycache__/
+**/__pycache__/
+backend/.env
+backend/.cache/
+backend/checkpoints.sqlite
+backend/results.json
+backend/dev_cache/
+backend/scripts/
+*.pyc
+
+# frontend
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+frontend/scripts/e2e-screenshots/
+
+# agent / internal docs — not part of the shipped product
+BUILD_PLAN.md
+CLAUDE.md
+**/CLAUDE.md
+.claude/
+claude_instructions*
+
+# misc
+.DS_Store
+*.log

@@ -1,0 +1,318 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+ * Wayfare design language: "dark cinematic travel" — a night-flight / twilight
+ * horizon mood. See BUILD_PLAN.md section 11. The app is permanently dark
+ * (no light-mode toggle); shadcn's `.dark` class is applied unconditionally
+ * on <html> and repainted with the twilight/aurora palette below.
+ * ------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: ui-monospace, monospace;
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-aurora-from: var(--aurora-from);
+  --color-aurora-to: var(--aurora-to);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root,
+.dark {
+  /* twilight base */
+  --background: #0a0e1a;
+  --foreground: #f3f5fb;
+  --card: rgba(255, 255, 255, 0.045);
+  --card-foreground: #f3f5fb;
+  --popover: #131a2e;
+  --popover-foreground: #f3f5fb;
+
+  /* aurora accent: teal -> violet */
+  --aurora-from: #2dd4bf;
+  --aurora-to: #8b5cf6;
+  /* one refined accent against the aurora — champagne gold, used sparingly
+     for the figures that matter most (the budget total, typical-weather
+     notes, the hotel marker) so it reads as a deliberate highlight, not a
+     second competing brand color. */
+  --accent-gold: #d4af6a;
+  --primary: #8b5cf6;
+  --primary-foreground: #0a0e1a;
+
+  --secondary: rgba(255, 255, 255, 0.07);
+  --secondary-foreground: #f3f5fb;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: #9aa3bd;
+  --accent: rgba(139, 92, 246, 0.16);
+  --accent-foreground: #ece8ff;
+  --destructive: #f97373;
+  --border: rgba(255, 255, 255, 0.09);
+  --input: rgba(255, 255, 255, 0.09);
+  --ring: #8b5cf6;
+
+  --chart-1: #2dd4bf;
+  --chart-2: #8b5cf6;
+  --chart-3: #f0abfc;
+  --chart-4: #fbbf24;
+  --chart-5: #60a5fa;
+  --radius: 0.85rem;
+
+  --sidebar: #0d1325;
+  --sidebar-foreground: #f3f5fb;
+  --sidebar-primary: #8b5cf6;
+  --sidebar-primary-foreground: #0a0e1a;
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: #f3f5fb;
+  --sidebar-border: rgba(255, 255, 255, 0.09);
+  --sidebar-ring: #8b5cf6;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: var(--background);
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139, 92, 246, 0.16), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 10%, rgba(45, 212, 191, 0.10), transparent 60%);
+    background-attachment: fixed;
+    position: relative;
+  }
+  html {
+    @apply font-sans;
+    color-scheme: dark;
+  }
+  h1, h2, h3, h4 {
+    @apply font-heading;
+    letter-spacing: -0.01em;
+  }
+  /* Default stacking context so normal content paints above the fixed
+   * grain/vignette pseudo-elements below — scoped to @layer base (not left
+   * unlayered) so it loses to any element's own position/z-index utility
+   * classes (e.g. AmbientBackground's `fixed z-0`, NavBar's `sticky z-20`),
+   * which live in Tailwind's higher-priority @layer utilities.
+   */
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* Cinematic grain + vignette overlay, fixed to the viewport, purely decorative. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 120% 90% at 50% 30%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Glassmorphic surface, used by Card and other elevated panels. */
+.glass {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Card "material": real depth, not a flat translucent fill — a faint top
+ * highlight (light catching the upper edge), a slight bottom tint, and a
+ * softer, more pronounced shadow for tactile elevation off the page.
+ */
+.card-material {
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.055) 0%,
+    rgba(255, 255, 255, 0.012) 45%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  box-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.42),
+    0 2px 8px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.22);
+}
+
+.text-gradient {
+  background-image: linear-gradient(135deg, var(--aurora-from), var(--aurora-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-aurora {
+  background-image: linear-gradient(135deg, var(--aurora-from), var(--aurora-to));
+}
+
+/* Ambient app-wide parallax: slow-drifting aurora orbs + twinkling stars,
+   behind all content (see AmbientBackground.tsx). Pure CSS so the global
+   prefers-reduced-motion override above freezes it for free. */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+@keyframes ambient-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, -40px) scale(1.1); }
+}
+@keyframes ambient-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-60px, 30px) scale(0.93); }
+}
+@keyframes ambient-drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, 50px) scale(1.06); }
+}
+
+.ambient-star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  pointer-events: none;
+}
+@keyframes ambient-twinkle {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.85; }
+}
+
+/* Animated hero scene (landing page) — see HeroScene.tsx */
+@keyframes hero-cloud-drift {
+  from { transform: translateX(-120px); }
+  to { transform: translateX(120px); }
+}
+@keyframes hero-arc-pulse {
+  0%, 100% { stroke-dashoffset: 0; opacity: 0.25; }
+  50% { stroke-dashoffset: -18; opacity: 0.7; }
+}
+@keyframes hero-contrail-flow {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -240; }
+}
+
+@keyframes marker-drop {
+  0% {
+    transform: translateY(-26px) scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(4px) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.map-marker {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  animation: marker-drop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.map-marker-activity {
+  background: linear-gradient(135deg, var(--aurora-from), var(--aurora-to));
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.75), 0 0 3px rgba(255, 255, 255, 0.7);
+}
+
+.map-marker-hotel {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #e8c989, var(--accent-gold));
+  box-shadow: 0 0 12px rgba(212, 175, 106, 0.75), 0 0 3px rgba(255, 255, 255, 0.7);
+}
+
+.leaflet-container {
+  background: #0a0e1a !important;
+  font-family: var(--font-sans);
+}
+
+/* Animated gradient glow behind primary CTAs — only `transform`/`opacity` are
+   keyframed, so it stays compositor-cheap; the global reduced-motion rule
+   above freezes it for free. */
+.cta-glow {
+  position: relative;
+  isolation: isolate;
+}
+.cta-glow::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--aurora-from), var(--aurora-to));
+  filter: blur(18px);
+  opacity: 0.5;
+  animation: cta-glow-pulse 2.8s ease-in-out infinite;
+}
+@keyframes cta-glow-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.95); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
